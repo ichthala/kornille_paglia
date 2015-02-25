@@ -27,6 +27,8 @@ class LyricsScraper
       rescue
         puts "Something went wrong with the song #{link.content}. Skipping that one..."
       end
+      # try to avoid getting blocked
+      sleep(1)
     end
 
     f.close
