@@ -14,14 +14,19 @@ class LyricsScraper
       exit(0)
     end
 
+    f = File.new("#{artist_name}_lyrics.txt", "w+")
+
     doc.css('#listAlbum a[target=_blank]').each do |link|
       song_title = link.content.downcase.gsub(/\s/, '')
       puts "Getting song #{link.content}..."
       lyrics_doc = Nokogiri::HTML(open("http://www.azlyrics.com/#{artist_name}/#{song_title}.html"))
       lyrics_node = lyrics_doc.at("//comment()[contains(.,'start of lyrics')]")
       lyrics_node = lyrics_node.parent
-      puts lyrics_node.content
+      f.write "#{lyrics_node.content}\n"
     end
+
+    f.close
+
   end
 
 end
